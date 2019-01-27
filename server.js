@@ -5,6 +5,7 @@ var hbs = require('express-handlebars');
 var bodyParser = require('body-parser');
 var express = require('express');
 var path = require('path');
+var request = require('superagent');
 
 
 
@@ -18,7 +19,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
-        expires: 60000
+        expires: 600000
     }
 }));
 
@@ -111,16 +112,36 @@ app.get('/form', (req, res) => {
     }
 });
 
+
 // route for provider search info
 app.get('/results', (req, res) => {
-    if(req.session.user && req.cookies.user_sid){
-        hbsContent.loggedin = true;
-        hbsContent.userName = req.session.user.username;
-        hbsContent.title = 'You are logged in';
-        res.sendFile(__dirname + '/public/results.html');
-    } else{
-        res.redirect('/login');
-    }
+    console.log(req.query);
+    console.log('CPT: ', req.query.cpt);
+    console.log('City: ', req.query.city);
+    console.log('hit')
+    request
+        .get("https://data.cms.gov/resource/4hzz-sw77.json?nppes_provider_city=" + req.query.city + "&hcpcs_code=" + req.query.cpt + "&$order=average_medicare_allowed_amt")
+        .query('$limit=10')
+        .query('$$app_token=FySBuoMt6fWdfjNhCEnX93Lq3')
+        .end(function(err, response) {
+            if(req.session.user && req.cookies.user_sid){
+                hbsContent.loggedin = true;
+                hbsContent.userName = req.session.user.username;
+                hbsContent.title = 'You are logged in';
+                response.body.forEach((monty, index) => {
+                    console.log('index: ', index);
+                    console.log('monty prop: ', monty.nppes_provider_last_org_name);
+
+                })
+                res.render('results', {
+                    information: response.body
+                });
+            } else{
+                res.redirect('/login');
+            }
+        });
+    
+    
 });
 
 // route for user saved searches

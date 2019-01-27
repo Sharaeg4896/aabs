@@ -121,15 +121,25 @@ let $city = $('#inputCity');
 let $cpt = $('#inputCpt');
 
 // fires off API request to CMS.gov
-$('#requestCmsData').on('click', function (){
-	dataResponse();
+$('#requestCmsData').on('click', function (e){
+
+    window.location.href = "/results?cpt=" + $cpt.val() + "&city=" + $city.val().trim().toUpperCase();
+    
+    // $city.val().trim().toUpperCase();
+    // $cpt.val();
+    // $.ajax({
+    //     url: "sharae?cpt=" + $cpt.val() + "&city=" + $city.val().trim().toUpperCase() ,
+    //     type: "GET"
+    // })
+    
+    
 })
 
 function dataResponse() {
 
     $.ajax({
         url: "https://data.cms.gov/resource/4hzz-sw77.json?nppes_provider_city=" + $city.val().trim().toUpperCase() + "&hcpcs_code=" + $cpt.val() + "&$order=average_medicare_allowed_amt",
-        type: "GET",
+        type: "post",
         data: {
             "$limit" : 20,
             "$$app_token" : 'FySBuoMt6fWdfjNhCEnX93Lq3'
@@ -208,7 +218,7 @@ function createTableRow(data){
         .append($average)
         .append($saveInfo);
     
-    $('.providerSeachResults tbody').append($tableRow1);
+    $('body').append($tableRow1);
 
 
 };
