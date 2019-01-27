@@ -1,0 +1,30 @@
+{
+  "name": "aabs",
+  "version": "1.0.0",
+  "description": "cpt code comparer project2",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sharaeg4896/aabs.git"
+  },
+  "author": "sharae adrienne brandon austin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Sharaeg4896/aabs/issues"
+  },
+  "homepage": "https://github.com/Sharaeg4896/aabs#readme",
+  "dependencies": {
+    "bcrypt": "^3.0.3",
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.4",
+    "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.6",
+    "mysql2": "^1.6.4",
+    "sequelize": "^4.42.0"
+  }
+}

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>
+        {{# if loggedin}}
+            Welcome {{userName}}
+        {{else}}
+            AABS
+        {{/if}}
+    </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../css/styles.css">
+    <link rel="stylesheet" type="text/css" href="../../css/styles.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.js"></script>
+
+</head>
+<body>
+    <div>
+        <a href="/signup"><button>Sign Up</button></a>
+        {{# if loggedin}}
+        <a href="/logout"><button>Log Out</button></a>
+        {{else}}
+        <a href="/login"><button>Log In</button></a>
+        {{/if}}
+    </div> 
+    {{{body}}}
+</body>
+</html>
