@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize');
 var bcrypt = require('bcrypt');
 
-const sequelize = new Sequelize('cpt_DB', 'root', 'CodeRae2019!', {
+const sequelize = new Sequelize('cpt_DB', 'root', 'Password', {
     host: 'localhost',
     port: 3306,
     dialect: 'mysql',
