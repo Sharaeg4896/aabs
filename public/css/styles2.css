@@ -90,7 +90,8 @@ form .error {
     color: #ff0000;
 }
 #second {
-    display: none;  
+    display: block;
+    width: 100%;  
 }
 .form-group, .form-control {
     font-size: 14px;

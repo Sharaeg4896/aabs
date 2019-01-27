@@ -22,6 +22,8 @@ app.use(session({
     }
 }));
 
+app.use(express.static("public"));
+
 app.engine('hbs', hbs({extname: 'hbs', defaultLayout: 'layout', layoutsDir: __dirname + '/views/layout'}));
 app.set('view engine', 'hbs');
 
@@ -65,6 +67,7 @@ app.route('/signup')
             res.redirect('./login');
         })
         .catch(error => {
+            console.log(error);
             res.redirect('/signup');
         });
     });
@@ -81,15 +84,16 @@ app.route('/login')
     
     User.findOne({ where: {username: username} 
         }).then(function (user) {
+            console.log(user);
             if(!user) {
                 console.log('User not found');
                 res.redirect('/login');
-            } else if (!user.validPassword(password)) {
-                console.log('Password is incorrect')
-                res.redirect('/login');
-            } else {
+            } else if (user.validPassword(password)) {
                 req.session.user = user.dataValues;
                 res.redirect('/form');
+            } else {
+                console.log('Password is incorrect')
+                res.redirect('/login');
             }
     });
 });
@@ -101,7 +105,7 @@ app.get('/form', (req, res) => {
         hbsContent.userName = req.session.user.username;
         hbsContent.title = 'You are logged in';
         // res.render('form', hbsContent);
-        res.sendFile(__dirname + '/public/form.html');
+        res.render('form', hbsContent);
     } else{
         res.redirect('/login');
     }
