@@ -4,7 +4,6 @@ var User = require('./models/user');
 var hbs = require('express-handlebars');
 var bodyParser = require('body-parser');
 var express = require('express');
-var path = require('path');
 var request = require('superagent');
 
 
@@ -53,11 +52,11 @@ app.get('/', sessionChecker, (req , res) => {
     res.redirect('/login');
 });
 
-// route for sign up page
-app.route('/signup')
+// To sign up
+app.route('/login')
     .get((req, res) => {
         // res.sendFile(__dirname + '/public/signup.html');
-        res.render('signup', hbsContent);
+        res.render('index', hbsContent);
     })
     .post((req, res) => {
         User.create({
@@ -65,11 +64,11 @@ app.route('/signup')
             password: req.body.password
         }).then(user => {
             req.session.user = user.dataValues;
-            res.redirect('./login');
+            res.redirect('/login');
         })
         .catch(error => {
             console.log(error);
-            res.redirect('/signup');
+            res.render('index', hbsContent);
         });
     });
 
@@ -77,7 +76,7 @@ app.route('/signup')
 app.route('/login')
     .get((req, res) => {
         
-        res.render('login', hbsContent);
+        res.render('index', hbsContent);
     })
     .post((req, res) => {
     var username = req.body.username;
@@ -88,29 +87,39 @@ app.route('/login')
             console.log(user);
             if(!user) {
                 console.log('User not found');
-                res.redirect('/login');
+                res.render('index', hbsContent);
             } else if (user.validPassword(password)) {
                 req.session.user = user.dataValues;
                 res.redirect('/form');
             } else {
                 console.log('Password is incorrect')
-                res.redirect('/login');
+                res.render('index', hbsContent);
             }
     });
 });
 
-// route for form page
-app.get('/form', (req, res) => {
-    if(req.session.user && req.cookies.user_sid){
-        hbsContent.loggedin = true;
-        hbsContent.userName = req.session.user.username;
-        hbsContent.title = 'You are logged in';
-        // res.render('form', hbsContent);
-        res.render('form', hbsContent);
-    } else{
-        res.redirect('/login');
-    }
-});
+// // route for form page
+// app.route('/form', (req, res) 
+//     .get((req, res) => {
+//         res.render('form', hbsContent)
+//     })
+//     // if(req.session.user && req.cookies.user_sid){
+//     //     hbsContent.loggedin = true;
+//     //     hbsContent.userName = req.session.user.username;
+//     //     hbsContent.title = 'You are logged in';
+        
+//     //     res.render('form', hbsContent);
+//     // }
+//     .post((req, res) => {
+//         var scan = req.body.scan;
+//     Scan.findAll({where: {code: scan }
+//         }).then()
+     
+//     // else{
+//     //     res.render('index', hbsContent);
+//     // }
+
+// });
 
 
 // route for provider search info
@@ -118,7 +127,7 @@ app.get('/results', (req, res) => {
     console.log(req.query);
     console.log('CPT: ', req.query.cpt);
     console.log('City: ', req.query.city);
-    console.log('hit')
+    
     request
         .get("https://data.cms.gov/resource/4hzz-sw77.json?nppes_provider_city=" + req.query.city + "&hcpcs_code=" + req.query.cpt + "&$order=average_medicare_allowed_amt")
         .query('$limit=10')
@@ -128,16 +137,12 @@ app.get('/results', (req, res) => {
                 hbsContent.loggedin = true;
                 hbsContent.userName = req.session.user.username;
                 hbsContent.title = 'You are logged in';
-                response.body.forEach((monty, index) => {
-                    console.log('index: ', index);
-                    console.log('monty prop: ', monty.nppes_provider_last_org_name);
-
-                })
+            
                 res.render('results', {
                     information: response.body
                 });
             } else{
-                res.redirect('/login');
+                res.render('index', hbsContent);
             }
         });
     
@@ -152,8 +157,37 @@ app.get('/savedProvInfo', (req, res) => {
         hbsContent.title = 'You are logged in';
         res.sendFile(__dirname + '/public/saved.html');
     } else{
-        res.redirect('/login');
+        res.render('index', hbsContent);
     }
+});
+
+// Saved searches route for saving user searches
+app.post('/savedSearches', (req, res) => {
+    SavedSearches.create({
+        userName: req.session.user,
+        providerName: req.body.providerName,
+        providerAddress: req.body.providerAddress,
+        providerCharged: req.body.providerCharged,
+        medicareAllowed: req.body.medicareAllowed,
+        medicarePaid: req.body.insurancePaid,
+        nationalAddress: req.body.nationalAddress 
+        }).then((result) => {
+            res.json(result);
+        });
+});
+
+// DELETE route for deleting a provider 
+app.delete('/savedSearches/:id', (req, res) => {
+    let deleteRecord = req.params.id;
+
+    db.Post.destroy({
+        where: {
+            id: deleteRecord
+        }
+    }).then ((result) => {
+        res.json(result);
+    });
+
 });
 
 // route to log out
@@ -165,7 +199,7 @@ app.get('/logout', (req, res) => {
         console.log(JSON.stringify(hbsContent));
         res.redirect('/');
     }else {
-        res.redirect('/login');
+        res.render('index', hbsContent);
     }
 });
 
