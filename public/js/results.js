@@ -1,7 +1,7 @@
 $(document).ready(function() {
     // function to save search to db
     $('#toSave').on('click', () => {
-        let userSaved = $(this).parent("td").parent("tr").data("author");
+        let userSaved = $(this).parent("td").parent("tr").data("cpt");
     });
 
     function saveSearch(providerData) {

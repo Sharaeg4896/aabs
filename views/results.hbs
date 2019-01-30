@@ -3,6 +3,7 @@
         <table>
     <thead>
         <tr>
+            <th scope="col"></th>
             <th scope="col">Provider Name</th>
             <th scope="col">Provider Address></th>
             <th scope="col">Provider Charged</th>
@@ -17,18 +18,18 @@
         {{#each information}} 
         <tr>
             <td>{{@index}}</td>
-            <td>{{nppes_provider_first_name}} {{nppes_provider_last_org_name}}</td>
-            <td> {{nppes_provider_street1}} {{nppes_provider_state}} {{nppes_provider_cit}}</td>
-            <td> {{average_submitted_chrg_amt}}</td>
-            <td>{{average_medicare_allowed_amt}}</td>
-            <td>{{average_medicare_payment_amt}}</td>
-            <td>{{average_medicare_standard_amt}}</td>
-            <td><button class="toSave">Save</button></td>
+            <td id="providerName">{{nppes_provider_first_name}} {{nppes_provider_last_org_name}}</td>
+            <td id="providerAddress"> {{nppes_provider_street1}} {{nppes_provider_state}} {{nppes_provider_cit}}</td>
+            <td id="providerCharged"> {{average_submitted_chrg_amt}}</td>
+            <td id="medicareAllowed">{{average_medicare_allowed_amt}}</td>
+            <td id="medicarePaid">{{average_medicare_payment_amt}}</td>
+            <td id="nationalAverage">{{average_medicare_standard_amt}}</td>
+            <td id= ><button class="toSave">Save</button></td>
         </tr>
         {{/each}}
 
     </tbody>
 </table>
     </div>
-    <a href="/user/saved"><button type="button" class="btn btn-block mybtn btn-primary tx-tfm">View your saved searches</button></a>
+    <a href="/savedProvInfo"><button type="button" class="btn btn-block mybtn btn-primary tx-tfm">View your saved searches</button></a>
     <script src="/js/results.js"></script>

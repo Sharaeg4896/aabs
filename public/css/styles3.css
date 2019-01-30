@@ -1,0 +1,107 @@
+* {
+    box-sizing: border-box;
+}
+
+div {
+    display: block;
+}
+
+body {
+    background-color: white;
+    margin: 0px;
+    overflow-y: scroll;
+    padding: 0px;
+}
+
+.container {
+    max-width: 1200px;
+    
+}
+#first-container{
+    background-image: url(../images/image7.jpg);
+    background-size: contain;
+    height: 100% ;
+    padding:60px;
+    background-repeat: no-repeat;
+    
+}
+
+
+
+a {
+    text-decoration: none !important;
+}
+
+.card-img-top {
+    height: 215px;
+}
+
+#card2 img {
+    width: 274px;
+    position: relative;
+    margin-left: 48px;
+}
+
+.card-title {
+    color: #ff5722;
+    font-size: 32px;
+}
+
+.row-full {
+    width: 100vw;
+    position: relative;
+    margin-left: -50vw;
+    height: 100%;
+    margin-top: 20px;
+    left: 50%;
+    padding:6rem 0;
+}
+
+.dot {
+    height: 175px;
+    width: 175px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+#footer {
+    position: relative;
+    top: 40px;
+}
+
+.navbar {
+    width: 100vw;
+}
+
+.btn-primary {
+    background-color: rgb(44, 166, 248);
+}
+.fa-border {
+    padding-top:.5em;
+    background-color:#fff;
+    border: 1 px solid #ced4da;
+}
+.btn {
+    border-radius: 0;
+}
+.input-group {
+    margin-right: 10px;
+}
+
+.btn-danger {
+    background-color: #ff5722;
+}
+
+#about {
+    background-color: #ff5722;
+
+}
+
+.bg-primary {
+    background-color: #ff5722 !important;
+}
+
+.bg-secondary {
+    background-color: rgb(44, 166, 248) !important;
+}
