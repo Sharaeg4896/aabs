@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-var bcrypt = require('bcrypt');
+var bcrypt = require('bcryptjs');
 
 const sequelize = new Sequelize('cpt_DB', 'root', '', {
     host: 'localhost',

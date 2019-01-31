@@ -1,6 +1,7 @@
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var User = require('./models/user');
+var SavedSearches = require('./models/savedSearches');
 var hbs = require('express-handlebars');
 var bodyParser = require('body-parser');
 var express = require('express');
@@ -222,20 +223,28 @@ app.get('/savedProvInfo', (req, res) => {
     }
 });
 
+
 // Saved searches route for saving user searches
 app.post('/savedSearches', (req, res) => {
+    console.log("USER: " + req.session.user.username);
+    var sessionname = req.session.user.username;
+    var username = sessionname.toString();
+    console.log(sessionname)
+    console.log(username);
+
     SavedSearches.create({
-        userName: req.session.user,
+        userName: username,
         providerName: req.body.providerName,
         providerAddress: req.body.providerAddress,
         providerCharged: req.body.providerCharged,
         medicareAllowed: req.body.medicareAllowed,
-        medicarePaid: req.body.insurancePaid,
-        nationalAddress: req.body.nationalAddress 
+        medicarePaid: req.body.medicarePaid,
+        nationalAverage: req.body.nationalAverage 
         }).then((result) => {
             res.json(result);
         });
 });
+
 
 // DELETE route for deleting a provider 
 app.delete('/savedSearches/:id', (req, res) => {
