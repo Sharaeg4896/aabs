@@ -47,16 +47,15 @@ var sessionChecker = (req, res, next) => {
     }
 };
 
-// route for home page
 app.get('/', sessionChecker, (req , res) => {
-    res.redirect('/login');
+    res.redirect('/signup');
 });
 
-// To sign up
-app.route('/login')
+// route for sign up page
+app.route('/signup')
     .get((req, res) => {
         // res.sendFile(__dirname + '/public/signup.html');
-        res.render('index', hbsContent);
+        res.render('signup', hbsContent);
     })
     .post((req, res) => {
         User.create({
@@ -68,7 +67,7 @@ app.route('/login')
         })
         .catch(error => {
             console.log(error);
-            res.render('index', hbsContent);
+            res.redirect('/signup');
         });
     });
 
@@ -87,18 +86,80 @@ app.route('/login')
             console.log(user);
             if(!user) {
                 console.log('User not found');
-                res.render('index', hbsContent);
+                res.redirect('/login');
             } else if (user.validPassword(password)) {
                 req.session.user = user.dataValues;
                 res.redirect('/form');
             } else {
                 console.log('Password is incorrect')
-                res.render('index', hbsContent);
+                res.redirect('/login');
             }
     });
 });
+// // route for home page
+// app.get('/', sessionChecker, (req , res) => {
+//     res.redirect('/login');
+// });
 
-// // route for form page
+// // To sign up
+// app.route('/login')
+//     .get((req, res) => {
+//         // res.sendFile(__dirname + '/public/signup.html');
+//         res.render('index', hbsContent);
+//     })
+//     .post((req, res) => {
+//         User.create({
+//             username: req.body.username,
+//             password: req.body.password
+//         }).then(user => {
+//             req.session.user = user.dataValues;
+//             res.redirect('/login');
+//         })
+//         .catch(error => {
+//             console.log(error);
+//             res.render('index', hbsContent);
+//         });
+//     });
+
+// // route for login page 
+// app.route('/login')
+//     .get((req, res) => {
+        
+//         res.render('index', hbsContent);
+//     })
+//     .post((req, res) => {
+//     var username = req.body.username;
+//     var password = req.body.password;
+    
+//     User.findOne({ where: {username: username} 
+//         }).then(function (user) {
+//             console.log(user);
+//             if(!user) {
+//                 console.log('User not found');
+//                 res.render('index', hbsContent);
+//             } else if (user.validPassword(password)) {
+//                 req.session.user = user.dataValues;
+//                 res.redirect('/form');
+//             } else {
+//                 console.log('Password is incorrect')
+//                 res.render('index', hbsContent);
+//             }
+//     });
+// });
+
+// route for form page
+app.get('/form', (req, res) => {
+    if(req.session.user && req.cookies.user_sid){
+        hbsContent.loggedin = true;
+        hbsContent.userName = req.session.user.username;
+        hbsContent.title = 'You are logged in';
+        // res.render('form', hbsContent);
+        res.render('form', hbsContent);
+    } else{
+        res.redirect('/login');
+    }
+});
+
 // app.route('/form', (req, res) 
 //     .get((req, res) => {
 //         res.render('form', hbsContent)
