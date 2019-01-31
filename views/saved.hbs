@@ -1,6 +1,46 @@
  <!-- Brandon place for Navbar -->
+    
+
+    {{!-- </div> --}}
+
+    {{!-- <script src="./assets/js/saved.js"></script> --}}
+
+<!-- Brandon place for Navbar -->
     <div id="userSavedSearches">
+        <table>
+    <thead>
+        <tr>
+            {{!-- <th scope="col"></th> --}}
+            <th scope="col">Provider Name</th>
+            <th scope="col">Provider Address</th>
+            <th scope="col">Provider Charged</th>
+            <th scope="col">Medicare Allowed Amount</th>
+            <th scope="col">Medicare Paid</th>
+            <th scope="col">Standardized Average</th>
+            <th scope="col" id="toDelete">Delete</th>
+        </tr>
 
+    </thead>
+    <tbody>
+        {{#each information}} 
+            <tr class="cptRow"> 
+                {{!-- <td>{{@index}}</td> --}}
+                <td id="providerName">{{providerName}}</td>
+                <td id="providerAddress"> {{providerAddress}} </td>
+                <td id="providerCharged"> {{providerCharged}}</td>
+                <td id="medicareAllowed">{{medicareAllowed}}</td>
+                <td id="medicarePaid">{{medicarePaid}}</td>
+                <td id="nationalAverage">{{ nationalAverage}}</td>
+                <td id={{id}}><button class="toDelete" id={{id}}>Delete</button></td>
+            </tr>
+        {{/each}}
+    
+
+    </tbody>
+</table>
     </div>
-
-    <script src="./assets/js/saved.js"></script>
+    {{!-- <a href="/savedProvInfo"> --}}
+    {{!-- <button type="button" id="getSavedSearches" class="btn btn-block mybtn btn-primary tx-tfm">View your saved searches</button> --}}
+    {{!-- </a> --}}
+    {{!-- <script src="/js/results.js"></script> --}}
+    <script src="/js/saved.js"></script>

@@ -199,7 +199,7 @@ app.get('/results', (req, res) => {
                 hbsContent.loggedin = true;
                 hbsContent.userName = req.session.user.username;
                 hbsContent.title = 'You are logged in';
-            
+                
                 res.render('results', {
                     information: response.body
                 });
@@ -245,12 +245,32 @@ app.post('/savedSearches', (req, res) => {
         });
 });
 
+// Get saved searches
+app.get('/savedSearches', (req, res) => {
+    var sessionname = req.session.user.username;
+    var username = sessionname.toString();
+    // console.log("User name:" + username);
+
+    SavedSearches.findAll({
+        where: {
+            userName: username
+        }
+      }).then(function(response) {
+        console.log("Results: " + response[0])
+        res.render('saved', {
+            information: response
+        });
+        // res.json(savedResults);
+      });
+    
+    
+});
 
 // DELETE route for deleting a provider 
 app.delete('/savedSearches/:id', (req, res) => {
     let deleteRecord = req.params.id;
 
-    db.Post.destroy({
+    SavedSearches.destroy({
         where: {
             id: deleteRecord
         }
