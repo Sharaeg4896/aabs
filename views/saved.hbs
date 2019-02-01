@@ -1,11 +1,31 @@
- <!-- Brandon place for Navbar -->
-    
 
-    {{!-- </div> --}}
+<nav class="navbar navbar-white bg-white sticky-top">
+        <img src="./images/logo5.png" style="height:60px" id="logo">
+   
 
-    {{!-- <script src="./assets/js/saved.js"></script> --}}
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="/form">New Search</a> <!--ADD LINK-->
+            <a href="/savedSearches">Saved Searches</a> <!--ADD LINK-->
+            <a href="/logout">Log Out</a> <!--ADD LINK-->
+        </div>
 
-<!-- Brandon place for Navbar -->
+        <div id="main">
+            <span style="font-size: 40px; cursor:pointer" onclick="openNav()">&#9776;</span>
+        </div>
+    </nav>
+
+    <script>
+        function openNav() {
+           document.getElementById("mySidenav").style.width = "250px";
+           document.getElementById("main").style.marginRight = "250px";
+        }
+
+        function closeNav() {
+           document.getElementById("mySidenav").style.width = "0";
+           document.getElementById("main").style.marginRight = "0";
+        }
+    </script>
     <div id="userSavedSearches">
         <table>
     <thead>
@@ -40,8 +60,5 @@
     </tbody>
 </table>
     </div>
-    {{!-- <a href="/savedProvInfo"> --}}
-    {{!-- <button type="button" id="getSavedSearches" class="btn btn-block mybtn btn-primary tx-tfm">View your saved searches</button> --}}
-    {{!-- </a> --}}
-    {{!-- <script src="/js/results.js"></script> --}}
+    <link rel="stylesheet" href="/css/styles.css">
     <script src="/js/saved.js"></script>

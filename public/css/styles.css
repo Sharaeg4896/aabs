@@ -1,5 +1,5 @@
 /* Brandon's style page */
-
+/* Form styling */
 /*custom font*/
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
@@ -15,6 +15,7 @@ html {
 body {
 	font-family: "Open Sans", arial, verdana;
 	background: #0e0e0e;
+	background-image: url(../images/image14.jpg);
 }
 /*form styles*/
 #msform {
@@ -56,7 +57,7 @@ body {
 /*buttons*/
 #msform .action-button {
 	width: 100px;
-	background: orange;
+	background: rgb(44, 166, 248);
 	font-weight: bold;
 	color: white;
 	border: 0 none;
@@ -64,15 +65,18 @@ body {
 	cursor: pointer;
 	padding: 10px 5px;
 	margin: 10px 5px;
+	font-size: 14px;
 }
 #msform .action-button:hover, #msform .action-button:focus {
-	box-shadow: 0 0 0 2px white, 0 0 0 3px orange;
+	box-shadow: 0 0 0 2px white, 0 0 0 3px #ff5722;
+	background-color: #0c2e8a;
 }
 /*headings*/
 .fs-title {
-	font-size: 16px;
+	font-size: 20px;
 	text-transform: uppercase;
-	color: purple;
+	color: #ff5722;
+	font-weight: bold;
 	margin-bottom: 10px;
 }
 .fs-subtitle {
@@ -92,7 +96,7 @@ body {
 	list-style-type: none;
 	color: white;
 	text-transform: uppercase;
-	font-size: 9px;
+	font-size: 10px;
 	width: 33.3%;
 	float: left;
 	position: relative;
@@ -127,7 +131,7 @@ body {
 /*marking active/completed steps green*/
 /*The number of the step and the connector before it = green*/
 #progressbar li.active:before,  #progressbar li.active:after{
-	background: orange;
+	background: rgb(44, 166, 248);
 	color: white;
 }
 
@@ -165,6 +169,77 @@ body {
 	left: 310px;
 }
 
-#mri, #ct-scan {
+#mri, #ct {
 	height: 80px;
+}
+
+/* navbar styling */
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: rgb(44, 166, 248);
+    
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: white;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    background-color: white;
+    color: #ff5722;
+    font-weight: bold;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 36px;
+    margin-right: 25px;
+    padding-left: 8px;
+}
+
+#main {
+    transition: 0.5s;
+    float:right;
+    margin-right: 5px;
+    padding: 0 5px;
+    color: rgb(44, 166, 248)
+}
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+/* Table styling */
+.providerSearchResults {
+    padding: 40px;
+}
+
+.table {
+    text-align: center;
+}
+
+.thead-dark {
+    background-color: rgb(44, 166, 248);
+    color: white;
+}
+
+.btn-success {
+    background-color: rgb(7, 182, 100);
+    border-radius: 0;
 }

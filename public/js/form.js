@@ -80,13 +80,15 @@ $(".previous").click(function(){
 /***************************** MRI or CT click Events for step 3 of the form *********************/
 // Fires CT/MRI button is clicked  NEEDS FUNCTIONALITY
 $('#mri').on('click', function() {
-    console.log("MRI button clicked");
-    getScan();
+	console.log("MRI button clicked");
+	let mri = 'mri'
+    getScan(mri);
 });
 
 $('#ct').on('click', function() {
-    console.log("CT button clicked");
-    getScan();
+	console.log("CT button clicked");
+	let ct = 'ct'
+    getScan(ct);
 })
 
 function getScan() {

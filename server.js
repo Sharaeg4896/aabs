@@ -29,6 +29,8 @@ app.use(express.static("public"));
 app.engine('hbs', hbs({extname: 'hbs', defaultLayout: 'layout', layoutsDir: __dirname + '/views/layout'}));
 app.set('view engine', 'hbs');
 
+
+
 // if browser=alive but server=dead.. clears cookie info in browser
 app.use((req, res, next) => {
     if (req.cookies.user_sid && !req.session.user){

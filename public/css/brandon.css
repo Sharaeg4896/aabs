@@ -1,0 +1,22 @@
+/* Table styling */
+.providerSearchResults {
+    padding: 40px;
+}
+
+.table {
+    text-align: center;
+}
+
+.thead-dark {
+    background-color: rgb(44, 166, 248);
+    color: white;
+}
+
+.table-hover {
+    background-color: rgb(22, 83, 124);
+}
+
+.btn-success {
+    background-color: rgb(7, 182, 100);
+    border-radius: 0;
+}
