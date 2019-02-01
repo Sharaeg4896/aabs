@@ -92,42 +92,29 @@ $('#ct').on('click', function() {
     getScan($ct);
 })
 
-// function getScan(scanType) {
-// 	console.log('This is the scantype', scanType);
-// 	$.get('api/all', (scanOptions) => {
-// 		for (var i = 0; i < scanOptions.length; i++) {
-// 			if (scanOptions[i].description == scanType) {
-// 				var row = $("<div>");
-// 				row.addClass("scan");
-				
-// 				row.append('<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="' + scanOptions[i].cpt +' " checked>')
-// 				row.append("<p>" + scanOptions[i].cpt + "</p>");
-// 				row.append("<p>" + scanOptions[i].description + "</p>");
-				
-			
-// 				$('#scanOptions').append(row);
-// 			}
-		
-// 		}
-// 	});
-// };
+// function to query for CT or MRI out of db
+function getScan(scanType) {
+	console.log('This is the scanType searched ' + scanType)
 
-function getScan() {
-	$.get('api/all', (scanOptions) => {
+
+	$.get('api/' + scanType, (scanOptions) => {
+		$("#scanOptions").empty();
+		var $list = $("<ul class='list-group list-group-flush'>");
 		for (var i = 0; i < scanOptions.length; i++) {
-			var row = $("<div>");
-			row.addClass("scan");
-			
-			row.append("<a>" + scanOptions[i].cpt + scanOptions[i].description + "</a>");
-		
-			$('#scanOptions').append(row);
+			var $listItem = $('<li class="list-group-item" id="scan" style="cursor:pointer;color:#007bff" value=' + scanOptions[i].cpt + '>' + scanOptions[i].cpt + " " + scanOptions[i].description + '</li>');
+	
+			$list
+				.append($listItem)
+
+			$('#scanOptions').append($list);
 		};
 	});
 };
 // click event to grab cpt code (In Progress)
-$('.codeValue').on('click', function() {
-	let code = $('.codeValue').val();
-	console.log("checked", code);
+$('#scan').on('click', function(e) {
+	e.preventDefault();
+	let code = $('#scan').val();
+	console.log("grabbed", code);
     
 })
 

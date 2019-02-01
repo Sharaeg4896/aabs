@@ -113,12 +113,18 @@ app.get('/form', (req, res) => {
     }
 });
 
-app.get("/api/all", function(req, res) {
-
-    Scans.findAll({}).then(function(choices) {
-      // results are available to us inside the .then
-      res.json(choices);
-    });
+app.get("/api/:scan", function(req, res) {
+    console.log(req.params.scan)
+    if (req.params.scan){
+        Scans.findAll({
+            where : {
+                type: req.params.scan
+            }
+        }).then(function(choices) {
+          
+          res.json(choices);
+        });
+    } 
 
   });
     
