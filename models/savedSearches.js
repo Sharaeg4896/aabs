@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize');
 
 
-const sequelize = new Sequelize('cpt_DB', 'root', 'CodeRae2019!', {
+const sequelize = new Sequelize('cpt_DB', 'root', 'Austral01', {
     host: 'localhost',
     port: 3306,
     dialect: 'mysql',
@@ -34,19 +34,19 @@ var SavedSearches = sequelize.define('savedSearches',{
         allowNull: true
     },
     providerCharged: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.DECIMAL(10,2),
         allowNull: true
     },
     medicareAllowed: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.DECIMAL(10,2),
         allowNull: true
     },
     medicarePaid: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.DECIMAL(10,2),
         allowNull: true
     },
     nationalAverage: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.DECIMAL(10,2),
         allowNull: true
     }
 });
