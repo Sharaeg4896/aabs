@@ -9,6 +9,7 @@ var request = require('superagent');
 
 
 
+
 var app = express();
 app.set('port', 8080);
 app.use(bodyParser.urlencoded({extended: true}));
@@ -87,7 +88,7 @@ app.route('/login')
             console.log(user);
             if(!user) {
                 console.log('User not found');
-                res.redirect('/login');
+                res.redirect('/signup');
             } else if (user.validPassword(password)) {
                 req.session.user = user.dataValues;
                 res.redirect('/form');
@@ -97,56 +98,7 @@ app.route('/login')
             }
     });
 });
-// // route for home page
-// app.get('/', sessionChecker, (req , res) => {
-//     res.redirect('/login');
-// });
 
-// // To sign up
-// app.route('/login')
-//     .get((req, res) => {
-//         // res.sendFile(__dirname + '/public/signup.html');
-//         res.render('index', hbsContent);
-//     })
-//     .post((req, res) => {
-//         User.create({
-//             username: req.body.username,
-//             password: req.body.password
-//         }).then(user => {
-//             req.session.user = user.dataValues;
-//             res.redirect('/login');
-//         })
-//         .catch(error => {
-//             console.log(error);
-//             res.render('index', hbsContent);
-//         });
-//     });
-
-// // route for login page 
-// app.route('/login')
-//     .get((req, res) => {
-        
-//         res.render('index', hbsContent);
-//     })
-//     .post((req, res) => {
-//     var username = req.body.username;
-//     var password = req.body.password;
-    
-//     User.findOne({ where: {username: username} 
-//         }).then(function (user) {
-//             console.log(user);
-//             if(!user) {
-//                 console.log('User not found');
-//                 res.render('index', hbsContent);
-//             } else if (user.validPassword(password)) {
-//                 req.session.user = user.dataValues;
-//                 res.redirect('/form');
-//             } else {
-//                 console.log('Password is incorrect')
-//                 res.render('index', hbsContent);
-//             }
-//     });
-// });
 
 // route for form page
 app.get('/form', (req, res) => {
@@ -154,34 +106,13 @@ app.get('/form', (req, res) => {
         hbsContent.loggedin = true;
         hbsContent.userName = req.session.user.username;
         hbsContent.title = 'You are logged in';
-        // res.render('form', hbsContent);
+        
         res.render('form', hbsContent);
     } else{
         res.redirect('/login');
     }
 });
 
-// app.route('/form', (req, res) 
-//     .get((req, res) => {
-//         res.render('form', hbsContent)
-//     })
-//     // if(req.session.user && req.cookies.user_sid){
-//     //     hbsContent.loggedin = true;
-//     //     hbsContent.userName = req.session.user.username;
-//     //     hbsContent.title = 'You are logged in';
-        
-//     //     res.render('form', hbsContent);
-//     // }
-//     .post((req, res) => {
-//         var scan = req.body.scan;
-//     Scan.findAll({where: {code: scan }
-//         }).then()
-     
-//     // else{
-//     //     res.render('index', hbsContent);
-//     // }
-
-// });
 
 
 // route for provider search info
@@ -210,18 +141,20 @@ app.get('/results', (req, res) => {
     
     
 });
+// route to get scans
+app.get("/api/scans", function(req, res) {
+    let scan = mri || ct
+    
+    db.Scans.findAll({
+        where: {
+            cpt: scan
+        }
+    }).then(function(choices) {
+        console.log(choices);
+      res.render('form', {scanOptions: choices});
+    });
+  });
 
-// route for user saved searches
-app.get('/savedProvInfo', (req, res) => {
-    if(req.session.user && req.cookies.user_sid){
-        hbsContent.loggedin = true;
-        hbsContent.userName = req.session.user.username;
-        hbsContent.title = 'You are logged in';
-        res.sendFile(__dirname + '/public/saved.html');
-    } else{
-        res.render('index', hbsContent);
-    }
-});
 
 
 // Saved searches route for saving user searches
@@ -233,6 +166,7 @@ app.post('/savedSearches', (req, res) => {
     console.log(username);
 
     SavedSearches.create({
+        cpt: req.body.cpt,
         userName: username,
         providerName: req.body.providerName,
         providerAddress: req.body.providerAddress,
@@ -269,6 +203,7 @@ app.get('/savedSearches', (req, res) => {
 // DELETE route for deleting a provider 
 app.delete('/savedSearches/:id', (req, res) => {
     let deleteRecord = req.params.id;
+    console.log(deleteRecord)
 
     SavedSearches.destroy({
         where: {

@@ -4,6 +4,7 @@
     <thead>
         <tr>
             {{!-- <th scope="col"></th> --}}
+            <th scope="col">Code</th>
             <th scope="col">Provider Name</th>
             <th scope="col">Provider Address</th>
             <th scope="col">Provider Charged</th>
@@ -17,7 +18,7 @@
     <tbody>
         {{#each information}} 
         <tr class="cptRow"> 
-            {{!-- <td>{{@index}}</td> --}}
+            <td id ='cpt'>{{hcpcs_code}} </td>
             <td id="providerName">{{nppes_provider_first_name}} {{nppes_provider_last_org_name}}</td>
             <td id="providerAddress"> {{nppes_provider_street1}} {{nppes_provider_state}} {{nppes_provider_cit}}</td>
             <td id="providerCharged"> {{average_submitted_chrg_amt}}</td>

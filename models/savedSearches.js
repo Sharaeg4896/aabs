@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize');
 
 
-const sequelize = new Sequelize('cpt_DB', 'root', 'Austral01', {
+const sequelize = new Sequelize('cpt_DB', 'root', 'CodeRae2019!', {
     host: 'localhost',
     port: 3306,
     dialect: 'mysql',
@@ -17,6 +17,10 @@ const sequelize = new Sequelize('cpt_DB', 'root', 'Austral01', {
 
 // set up Saved Searches Table in mysql
 var SavedSearches = sequelize.define('savedSearches',{
+    cpt: {
+        type: Sequelize.STRING,
+        allowNull: true
+    },
     userName: {
         type: Sequelize.STRING,
         allowNull: true

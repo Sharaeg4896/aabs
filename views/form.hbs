@@ -31,18 +31,14 @@
         <fieldset>
           <h2 class="fs-title">Step 3</h2>
           <h3 class="fs-subtitle">Select <b>one</b> code</h3>
-          <div class="form-check">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-              <label class="form-check-label" for="exampleRadios1">CPT CODE & DESCRIPTION</label>
-          </div>
-          <div class="form-check">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-              <label class="form-check-label" for="exampleRadios1">CPT CODE & DESCRIPTION</label>
-          </div>
-          <div class="form-check">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-              <label class="form-check-label" for="exampleRadios1">CPT CODE & DESCRIPTION</label>
-          </div>
+            {{#each this}} 
+                <tr class="scanRow"> 
+                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                    <td id ='id'>{{id}} </td>
+                    <td id="cpt">{{cpt}}</td>
+                    <td id="description"> {{description}}</td>
+                </tr>
+            {{/each}}
           <input type="button" name="previous" class="previous action-button" value="Previous" />
           <input type="button" name="next" id="requestCmsData"class="next action-button" value="Get your cost" />
         </fieldset>

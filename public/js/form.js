@@ -80,37 +80,20 @@ $(".previous").click(function(){
 /***************************** MRI or CT click Events for step 3 of the form *********************/
 // Fires CT/MRI button is clicked  NEEDS FUNCTIONALITY
 $('#mri').on('click', function() {
-    console.log("MRI button clicked")
+    console.log("MRI button clicked");
     getScan();
 });
 
 $('#ct').on('click', function() {
-    console.log("CT button clicked")
+    console.log("CT button clicked");
     getScan();
 })
 
-
-function createScanRow(scanData) {
-    console.log(scanData);
-    let option = 0
-    let scanFormCheck = $("<div class ='form-check'></div>");
-    scanFormCheck
-        .append("<input class='form-check-input' type='radio' name='exampleRadios' id='exampleRadios1' value=" + (option++) + "checked>")
-        .append('<label class="form-check-label" for="exampleRadios1">' + 'CPT: ' + scanData.cpt + ' Description: ' + scanData.Description + '</label>');
-
-    scanFormCheck.find('fs-subtitle'); 
-    return scanFormCheck;
-  };
-
 function getScan() {
     $.get("/api/scans", function(data) {
-      var rowsToAdd = [];
-      for (var i = 0; i < data.length; i++) {
-        rowsToAdd.push(createScanRow(data[i]));
-      }
-      renderScanList(rowsToAdd);
-
-    });
+	 scan = data;
+	 res.render('scans', scan);
+	});
   };
 
 
