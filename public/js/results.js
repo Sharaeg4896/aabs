@@ -14,6 +14,7 @@ $(document).ready(function() {
 
      var newSavedSearch = {
       cpt: cpt,
+      userName: username,
       providerName: providerName,
       providerAddress: providerAddress,
       providerCharged: providerCharged,

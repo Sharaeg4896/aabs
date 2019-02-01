@@ -2,11 +2,11 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var User = require('./models/user');
 var SavedSearches = require('./models/savedSearches');
+var Scans = require('./models/scans')
 var hbs = require('express-handlebars');
 var bodyParser = require('body-parser');
 var express = require('express');
 var request = require('superagent');
-
 
 
 
@@ -28,7 +28,6 @@ app.use(express.static("public"));
 
 app.engine('hbs', hbs({extname: 'hbs', defaultLayout: 'layout', layoutsDir: __dirname + '/views/layout'}));
 app.set('view engine', 'hbs');
-
 
 
 // if browser=alive but server=dead.. clears cookie info in browser
@@ -108,14 +107,21 @@ app.get('/form', (req, res) => {
         hbsContent.loggedin = true;
         hbsContent.userName = req.session.user.username;
         hbsContent.title = 'You are logged in';
-        
-        res.render('form', hbsContent);
+        res.render('form', hbsContent)
     } else{
         res.redirect('/login');
     }
 });
 
+app.get("/api/all", function(req, res) {
 
+    Scans.findAll({}).then(function(choices) {
+      // results are available to us inside the .then
+      res.json(choices);
+    });
+
+  });
+    
 
 // route for provider search info
 app.get('/results', (req, res) => {
@@ -136,27 +142,11 @@ app.get('/results', (req, res) => {
                 res.render('results', {
                     information: response.body
                 });
-            } else{
-                res.render('index', hbsContent);
-            }
+            } 
         });
     
     
 });
-// route to get scans
-app.get("/api/scans", function(req, res) {
-    let scan = mri || ct
-    
-    db.Scans.findAll({
-        where: {
-            cpt: scan
-        }
-    }).then(function(choices) {
-        console.log(choices);
-      res.render('form', {scanOptions: choices});
-    });
-  });
-
 
 
 // Saved searches route for saving user searches

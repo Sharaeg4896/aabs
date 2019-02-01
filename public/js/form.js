@@ -79,24 +79,58 @@ $(".previous").click(function(){
 
 /***************************** MRI or CT click Events for step 3 of the form *********************/
 // Fires CT/MRI button is clicked  NEEDS FUNCTIONALITY
+
 $('#mri').on('click', function() {
-	console.log("MRI button clicked");
-	let mri = 'mri'
-    getScan(mri);
+	let $mri = $('#mri').val();
+	console.log("MRI button clicked", $mri);
+    getScan($mri);
 });
 
 $('#ct').on('click', function() {
-	console.log("CT button clicked");
-	let ct = 'ct'
-    getScan(ct);
+	let $ct = $('#ct').val();
+	console.log("CT button clicked", $ct);
+    getScan($ct);
 })
 
+// function getScan(scanType) {
+// 	console.log('This is the scantype', scanType);
+// 	$.get('api/all', (scanOptions) => {
+// 		for (var i = 0; i < scanOptions.length; i++) {
+// 			if (scanOptions[i].description == scanType) {
+// 				var row = $("<div>");
+// 				row.addClass("scan");
+				
+// 				row.append('<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="' + scanOptions[i].cpt +' " checked>')
+// 				row.append("<p>" + scanOptions[i].cpt + "</p>");
+// 				row.append("<p>" + scanOptions[i].description + "</p>");
+				
+			
+// 				$('#scanOptions').append(row);
+// 			}
+		
+// 		}
+// 	});
+// };
+
 function getScan() {
-    $.get("/api/scans", function(data) {
-	 scan = data;
-	 res.render('scans', scan);
+	$.get('api/all', (scanOptions) => {
+		for (var i = 0; i < scanOptions.length; i++) {
+			var row = $("<div>");
+			row.addClass("scan");
+			
+			row.append("<a>" + scanOptions[i].cpt + scanOptions[i].description + "</a>");
+		
+			$('#scanOptions').append(row);
+		};
 	});
-  };
+};
+// click event to grab cpt code (In Progress)
+$('.codeValue').on('click', function() {
+	let code = $('.codeValue').val();
+	console.log("checked", code);
+    
+})
+
 
 
 /************ functions to query CMS DB ************/

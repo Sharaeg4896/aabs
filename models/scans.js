@@ -15,16 +15,19 @@ const sequelize = new Sequelize('cpt_DB', 'root', 'CodeRae2019!', {
 });
 
 
-// set up Saved Searches Table in mysql
-var Scans = sequelize.define('mriCodes',{
+// set up Scans Table in mysql
+var Scans = sequelize.define('scans',{
         id: {
             type: Sequelize.INTEGER,
-            unique: true,
             allowNull: false,
-            autoIncrement: true
+            primaryKey: true
+        },
+        type: {
+            type: Sequelize.STRING,
+            allowNull: false
         },
         cpt: {
-            type: Sequelize.STRING,
+            type: Sequelize.INTEGER,
             unique: true,
             allowNull: false
         },
@@ -32,13 +35,15 @@ var Scans = sequelize.define('mriCodes',{
             type: Sequelize.STRING,
             allowNull: false
         }
+
 });
 
 // create all defined tables in the database
 sequelize.sync()
-    .then(() => console.log('Scans Table has been successfully created if one does not exist'))
+    .then(() => console.log('Scans tables has been successfully created if one does not exist'))
     .catch(error => console.log('This error occured', error));
 
 
-// export SavedSearches module 
+// export Scans module 
 module.exports = Scans;
+

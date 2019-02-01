@@ -48,7 +48,7 @@
           <h2 class="fs-title">Step 2</h2>
           <h3 class="fs-subtitle">What type of care do you need?</h3>
           <input type="button" name="mri" class="next action-button" id="mri" value="MRI" />
-          <input type="button" name="ct" class="next action-button" id="ct" value="CT Scan" />
+          <input type="button" name="ct" class="next action-button" id="ct" value="CT" />
           <p class="or">OR</p>
           <label for="inputCpt">Already know your Procedure Code? Enter Below</label>
           <input type="text" class="form-control" id="inputCpt" placeholder="Enter a valid CPT code">
@@ -58,20 +58,13 @@
     
         <fieldset>
           <h2 class="fs-title">Step 3</h2>
-          <h3 class="fs-subtitle">Select <b>one</b> code</h3>
-            {{#each this}} 
-                <tr class="scanRow"> 
-                    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                    <td id ='id'>{{id}} </td>
-                    <td id="cpt">{{cpt}}</td>
-                    <td id="description"> {{description}}</td>
-                </tr>
-            {{/each}}
+          <h3 id="scanOptions" class="fs-subtitle">Select <b>one</b> code</h3>
           <input type="button" name="previous" class="previous action-button" value="Previous" />
           <input type="button" name="next" id="requestCmsData"class="next action-button" value="Search" />
         </fieldset>
       </form>
       <link rel="stylesheet" href="/css/styles.css">
+
       <!-- files that were in the head -->
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.js"></script>
