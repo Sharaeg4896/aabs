@@ -34,19 +34,19 @@ var SavedSearches = sequelize.define('savedSearches',{
         allowNull: true
     },
     providerCharged: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.DECIMAL(10,2),
         allowNull: true
     },
     medicareAllowed: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.DECIMAL(10,2),
         allowNull: true
     },
     medicarePaid: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.DECIMAL(10,2),
         allowNull: true
     },
     nationalAverage: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.DECIMAL(10,2),
         allowNull: true
     }
 });
