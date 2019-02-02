@@ -206,7 +206,7 @@ app.post('/savedSearches', (req, res) => {
 app.get('/savedSearches', (req, res) => {
     var sessionname = req.session.user.username;
     var username = sessionname.toString();
-    // console.log("User name:" + username);
+    console.log("User name:" + username);
 
     SavedSearches.findAll({
         where: {

@@ -232,7 +232,7 @@ body {
 
 .table {
 	text-align: center;
-	color: white;
+	color: black;
 }
 
 .thead-dark {
@@ -243,4 +243,9 @@ body {
 .btn-success {
     background-color: rgb(7, 182, 100);
     border-radius: 0;
+}
+
+td {
+	background-color: white;
+	opacity: 1;
 }
