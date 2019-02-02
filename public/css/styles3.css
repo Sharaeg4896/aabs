@@ -105,3 +105,52 @@ a {
 .bg-secondary {
     background-color: rgb(44, 166, 248) !important;
 }
+
+/* Styling for TEAM */
+.team {
+    /*margin: 4em 0;*/
+    position: relative;
+    background-color: #0c2e8a;
+    padding: 1em;
+    padding-bottom: 150px;
+}
+.team h1 {
+    color: white;
+    margin-top: 2em;
+    font-weight: bold;
+}
+.team .item {
+    position: relative;
+    overflow: hidden;
+}
+.team .des {
+    background: rgb(44, 166, 248);
+    color: #fff;
+    text-align: center;
+    border-top-right-radius: 93%;
+    transition: .3s ease-in-out;
+    position: absolute;
+    width: 88%;
+    bottom:0;
+    font-size: 20px;
+}
+.team .item:hover .des {
+    height: 100%;
+    background: #f05f407d;
+    position: absolute;
+    width: 89%;
+    padding: 5em;
+    top: 0;
+    border-top-right-radius: 0;
+}
+hr {
+    width: 150px;
+    height: 1px;
+    margin: auto;
+    border-top: 5px solid #f05f40;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
