@@ -1,3 +1,4 @@
+// dependencies required
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var User = require('./models/user');
@@ -9,7 +10,7 @@ var express = require('express');
 var request = require('superagent');
 
 
-
+// initializing express server
 var app = express();
 app.set('port', 8080);
 app.use(bodyParser.urlencoded({extended: true}));
@@ -24,8 +25,10 @@ app.use(session({
     }
 }));
 
+// static html and css 
 app.use(express.static("public"));
 
+// handlebars setup 
 app.engine('hbs', hbs({extname: 'hbs', defaultLayout: 'layout', layoutsDir: __dirname + '/views/layout'}));
 app.set('view engine', 'hbs');
 
@@ -38,6 +41,7 @@ app.use((req, res, next) => {
     next();
     
 });
+
 // content to display for logged users 
 var hbsContent = {userName: '', loggedin: false, title: 'You are not logged in', body: 'Hello!' };
 
@@ -57,7 +61,7 @@ app.get('/', sessionChecker, (req , res) => {
 // route for sign up page
 app.route('/signup')
     .get((req, res) => {
-        // res.sendFile(__dirname + '/public/signup.html');
+    
         res.render('signup', hbsContent);
     })
     .post((req, res) => {
@@ -134,8 +138,11 @@ app.get('/results', (req, res) => {
     console.log(req.query);
     console.log('CPT: ', req.query.cpt);
     console.log('City: ', req.query.city);
+    console.log('cptClick: ', req.query.cptCode);
     
-    request
+    if (req.query.cpt) {
+        console.log('first if condi')
+        request
         .get("https://data.cms.gov/resource/4hzz-sw77.json?nppes_provider_city=" + req.query.city + "&hcpcs_code=" + req.query.cpt + "&$order=average_medicare_allowed_amt")
         .query('$limit=10')
         .query('$$app_token=FySBuoMt6fWdfjNhCEnX93Lq3')
@@ -150,6 +157,24 @@ app.get('/results', (req, res) => {
                 });
             } 
         });
+    } else {
+        console.log('second if condi');
+        request
+        .get("https://data.cms.gov/resource/4hzz-sw77.json?nppes_provider_city=" + req.query.city + "&hcpcs_code=" + req.query.cptCode + "&$order=average_medicare_allowed_amt")
+        .query('$limit=10')
+        .query('$$app_token=FySBuoMt6fWdfjNhCEnX93Lq3')
+        .end(function(err, response) {
+            if(req.session.user && req.cookies.user_sid){
+                hbsContent.loggedin = true;
+                hbsContent.userName = req.session.user.username;
+                hbsContent.title = 'You are logged in';
+                
+                res.render('results', {
+                    information: response.body
+                });
+            } 
+        });
+    }
     
     
 });
