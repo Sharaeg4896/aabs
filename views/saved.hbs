@@ -1,64 +1,63 @@
 
 <nav class="navbar navbar-white bg-white sticky-top">
-        <img src="./images/logo5.png" style="height:60px" id="logo">
-   
+    <img src="./images/logo5.png" style="height:60px" id="logo">
 
-        <div id="mySidenav" class="sidenav">
-            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-            <a href="/form">New Search</a> <!--ADD LINK-->
-            <a href="/savedSearches">Saved Searches</a> <!--ADD LINK-->
-            <a href="/logout">Log Out</a> <!--ADD LINK-->
-        </div>
 
-        <div id="main">
-            <span style="font-size: 40px; cursor:pointer" onclick="openNav()">&#9776;</span>
-        </div>
-    </nav>
-
-    <script>
-        function openNav() {
-           document.getElementById("mySidenav").style.width = "250px";
-           document.getElementById("main").style.marginRight = "250px";
-        }
-
-        function closeNav() {
-           document.getElementById("mySidenav").style.width = "0";
-           document.getElementById("main").style.marginRight = "0";
-        }
-    </script>
-    <div id="userSavedSearches">
-        <table>
-    <thead>
-        <tr>
-            {{!-- <th scope="col"></th> --}}
-            <th scope="col">Code</th>
-            <th scope="col">Provider Name</th>
-            <th scope="col">Provider Address</th>
-            <th scope="col">Provider Charged</th>
-            <th scope="col">Medicare Allowed Amount</th>
-            <th scope="col">Medicare Paid</th>
-            <th scope="col">Standardized Average</th>
-            <th scope="col" id="toDelete">Delete</th>
-        </tr>
-
-    </thead>
-    <tbody>
-        {{#each information}} 
-            <tr class="cptRow"> 
-                <td id="cpt">{{cpt}}</td>
-                <td id="providerName">{{providerName}}</td>
-                <td id="providerAddress"> {{providerAddress}} </td>
-                <td id="providerCharged"> {{providerCharged}}</td>
-                <td id="medicareAllowed">{{medicareAllowed}}</td>
-                <td id="medicarePaid">{{medicarePaid}}</td>
-                <td id="nationalAverage">{{ nationalAverage}}</td>
-                <td id={{id}}><button class="toDelete" id={{id}}>Delete</button></td>
-            </tr>
-        {{/each}}
-    
-
-    </tbody>
-</table>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="/form">New Search</a> <!--ADD LINK-->
+        <a href="/savedSearches">Saved Searches</a> <!--ADD LINK-->
+        <a href="/logout">Log Out</a> <!--ADD LINK-->
     </div>
+
+    <div id="main">
+        <span style="font-size: 40px; cursor:pointer" onclick="openNav()">&#9776;</span>
+    </div>
+</nav>
+
+<script>
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+        document.getElementById("main").style.marginRight = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+        document.getElementById("main").style.marginRight = "0";
+    }
+</script>
+
+<div id="userSavedSearches" style="padding:40px">
+    <table class="table table-striped table-bordered " style="text-align: center">
+        <thead style="color:white; background-color: rgb(44, 166, 248">
+            <tr>
+                {{!-- <th scope="col"></th> --}}
+                <th scope="col">Code</th>
+                <th scope="col">Provider Name</th>
+                <th scope="col">Provider Address</th>
+                <th scope="col">Provider Charged</th>
+                <th scope="col">Medicare Allowed Amount</th>
+                <th scope="col">Medicare Paid</th>
+                <th scope="col">Standardized Average</th>
+                <th scope="col" id="toDelete">Delete</th>
+            </tr>
+
+        </thead>
+        <tbody>
+            {{#each information}} 
+                <tr class="cptRow"> 
+                    <td id="cpt">{{cpt}}</td>
+                    <td id="providerName">{{providerName}}</td>
+                    <td id="providerAddress"> {{providerAddress}} </td>
+                    <td id="providerCharged"> {{providerCharged}}</td>
+                    <td id="medicareAllowed">{{medicareAllowed}}</td>
+                    <td id="medicarePaid">{{medicarePaid}}</td>
+                    <td id="nationalAverage">{{ nationalAverage}}</td>
+                    <td id={{id}}><button class="toDelete" id={{id}}>Delete</button></td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
     <link rel="stylesheet" href="/css/styles.css">
     <script src="/js/saved.js"></script>

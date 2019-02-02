@@ -231,7 +231,8 @@ body {
 }
 
 .table {
-    text-align: center;
+	text-align: center;
+	color: white;
 }
 
 .thead-dark {

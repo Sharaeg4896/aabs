@@ -185,7 +185,7 @@ app.post('/savedSearches', (req, res) => {
     console.log("USER: " + req.session.user.username);
     var sessionname = req.session.user.username;
     var username = sessionname.toString();
-    console.log(sessionname)
+    console.log(sessionname);
     console.log(username);
 
     SavedSearches.create({
