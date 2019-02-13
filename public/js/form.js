@@ -1,11 +1,12 @@
-/********************* Functions for form.html page *******************************/
+$(document).ready(function() {
+	/********************* Functions for form.html page *******************************/
 
 /************ functions to make form reactive steps 1-3 ************/
 //jQuery time
 var current_fs, next_fs, previous_fs; //fieldsets
 var left, opacity, scale; //fieldset properties which we will animate
 var animating; //flag to prevent quick multi-click glitches
-
+var currentCode;
 $(".next").click(function(){
 	
 	if(animating) return false;
@@ -79,39 +80,53 @@ $(".previous").click(function(){
 
 /***************************** MRI or CT click Events for step 3 of the form *********************/
 // Fires CT/MRI button is clicked  NEEDS FUNCTIONALITY
-$('#mri').on('click', function() {
-    console.log("MRI button clicked")
-    getScan();
+
+$('#mri').on('click', function(e) {
+	e.preventDefault()
+	let $mri = $('#mri').val();
+	console.log("MRI button clicked", $mri);
+    getScan($mri);
 });
 
-$('#ct').on('click', function() {
-    console.log("CT button clicked")
-    getScan();
+$('#ct').on('click', function(e) {
+	e.preventDefault()
+	let $ct = $('#ct').val();
+	console.log("CT button clicked", $ct);
+    getScan($ct);
 })
 
+// function to query for CT or MRI out of db
+function getScan(scanType) {
+	console.log('This is the scanType searched ' + scanType)
 
-function createScanRow(scanData) {
-    console.log(scanData);
-    let option = 0
-    let scanFormCheck = $("<div class ='form-check'></div>");
-    scanFormCheck
-        .append("<input class='form-check-input' type='radio' name='exampleRadios' id='exampleRadios1' value=" + (option++) + "checked>")
-        .append('<label class="form-check-label" for="exampleRadios1">' + 'CPT: ' + scanData.cpt + ' Description: ' + scanData.Description + '</label>');
 
-    scanFormCheck.find('fs-subtitle'); 
-    return scanFormCheck;
-  };
+	$.get('api/' + scanType, (scanOptions) => {
+		$("#scanOptions").empty();
+		
+		var $list = $("<ul class='list-group list-group-flush'>");
+		for (var i = 0; i < scanOptions.length; i++) {
+		
+			var $listItem = $('<button type="button" class="btn btn-link scan" value="' + scanOptions[i].cpt + '">' + scanOptions[i].cpt + ' ' + scanOptions[i].description + '</button>');
+	
+			$list
+				.append($listItem)
 
-function getScan() {
-    $.get("/api/scans", function(data) {
-      var rowsToAdd = [];
-      for (var i = 0; i < data.length; i++) {
-        rowsToAdd.push(createScanRow(data[i]));
-      }
-      renderScanList(rowsToAdd);
+			$('#scanOptions').append($list);
+	
+		};
+		// click event to grab cpt code (In Progress)
+			$('.scan').on('click', function(e) {
+				e.preventDefault();
+				let code = $(this).val();
+				currentCode = code;
+				console.log("click is working", code);
+				
+			})
+		
+	});
+};
 
-    });
-  };
+
 
 
 /************ functions to query CMS DB ************/
@@ -120,135 +135,14 @@ function getScan() {
 let $city = $('#inputCity');
 let $cpt = $('#inputCpt');
 
+
 // fires off API request to CMS.gov
 $('#requestCmsData').on('click', function (e){
 
-    window.location.href = "/results?cpt=" + $cpt.val() + "&city=" + $city.val().trim().toUpperCase();
-    
-    // $city.val().trim().toUpperCase();
-    // $cpt.val();
-    // $.ajax({
-    //     url: "sharae?cpt=" + $cpt.val() + "&city=" + $city.val().trim().toUpperCase() ,
-    //     type: "GET"
-    // })
+    window.location.href = "/results?cpt=" + $cpt.val() + "&cptCode=" + currentCode + "&city=" + $city.val().trim().toUpperCase() ;
     
     
 })
 
-function dataResponse() {
 
-    $.ajax({
-        url: "https://data.cms.gov/resource/4hzz-sw77.json?nppes_provider_city=" + $city.val().trim().toUpperCase() + "&hcpcs_code=" + $cpt.val() + "&$order=average_medicare_allowed_amt",
-        type: "post",
-        data: {
-            "$limit" : 20,
-            "$$app_token" : 'FySBuoMt6fWdfjNhCEnX93Lq3'
-        }
-    }).done(function(data) {
-		
-      
-      if (data.length == 0) {
-        alert("No charges currently available for this CPT in that area");
-        
-      } else {
-        alert("Retrieved " + data.length + " records from the dataset!");
-      }
-      console.log(data);
-      createResultsTable(data);
-      createTableRow(data);
-      
-      
-    });
-    
-};
-
-function createResultsTable(data) {
-    let $providerSearchResults = $('.providerSeachResults');
-    let $h2 = $('<h2>CPT:</h2>');
-    let $tableHead = $('<thead></thead>');
-    let $tableRow = $('<tr></tr>');
-    let $providerNameTh = $('<th scope="col">Provider Name</th>'); 
-    let $providerAddressTh= $('<th scope="col">Provider Address</th>');
-    let $providerChargedTh= $('<th scope="col">Provider Charged</th>');
-    let $medicareAllowedTh= $('<th scope="col">Medicare Allowed Amount</th>');
-    let $medicarePaidTh= $('<th scope="col">Medicare Paid</th>');
-    let $nationalAverageTh= $('<th scope="col">Standardized Average</th>');
-    let $saveCb = $('<th scope="col" id="toSave">Save</th>');
-    let $tableBody = $('<tbody></tbody>');
-
-    $tableHead
-        .append($tableRow)
-        .append($providerNameTh)
-        .append($providerAddressTh)
-        .append($providerChargedTh)
-        .append($medicareAllowedTh)
-        .append($medicarePaidTh)
-        .append($nationalAverageTh)
-        .append($saveCb);
-    
-
-    $providerSearchResults
-        .append($h2)
-        .append($tableHead)
-        .append($tableBody);
-    
-    data.forEach(function(dataItem){
-        console.log('This is provider:' + dataItem.nppes_provider_first_name + ' ' + dataItem.nppes_provider_last_org_name);
-        createTableRow(dataItem);
-    });
-    
-};
-
-function createTableRow(data){
-    let $tableRow1= $('<tr></tr>');
-    let $name = $('<td>' + data.nppes_provider_first_name + ' ' + data.nppes_provider_last_org_name + '</td>');
-    let $address = $('<td>' + data.nppes_provider_street1 + ' ' + data.nppes_provider_state + ' ' + data.nppes_provider_city + '</td>');
-    let $charged = $('<td>' + data.average_submitted_chrg_amt + '</td>');
-    let $allowed = $('<td>' + data.average_medicare_allowed_amt + '</td>');
-    let $paid = $('<td>' + data.average_medicare_payment_amt + '</td>');
-    let $average = $('<td>' + data.average_medicare_standard_amt + '</td>');
-    let $saveInfo = $('<button class="toSave">Save</button>');
-
-    $tableRow1
-        .append($name)
-        .append($address)
-        .append($charged)
-        .append($allowed)
-        .append($paid)
-        .append($average)
-        .append($saveInfo);
-    
-    $('body').append($tableRow1);
-
-
-};
-
-
-// REFACTORING- creating object for rendering results on the saved pages.
-// .then(function(data) {
-//     let resultsObj {
-//         data.nppes_provider_first_name + data.nppes_provider_last_org_name,
-//         data.nppes_provider_street1 + data.nppes_provider_state  + data.nppes_provider_zip,
-//         data.average_submitted_chrg_amt,
-//         data.average_medicare_payment_amt,
-//         data.average_medicare_standard_amt,
-//     }
-        
-//     data.forEach(function(resultsObj){
-//         console.log('This is provider:' + dataItem.nppes_provider_first_name + ' ' + dataItem.nppes_provider_last_org_name);
-//         createTableRow(dataItem);
-      
-//     if (data.length == 0) {
-//       alert("No charges currently available for this CPT in that area");
-      
-//     } else {
-//       alert("Retrieved " + data.length + " records from the dataset!");
-//     }
-//     console.log(data);
-//     createResultsTable(data);
-//     createTableRow(data);
-    
-    
-//   });
-  
-// };
+})

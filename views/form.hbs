@@ -1,4 +1,32 @@
-  <!-- multistep form -->
+
+    <nav class="navbar navbar-white bg-white sticky-top">
+        <img src="./images/logo5.png" style="height:60px" id="logo">
+   
+
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="/form">New Search</a> <!--ADD LINK-->
+            <a href="/savedSearches">Saved Searches</a> <!--ADD LINK-->
+            <a href="/logout">Log Out</a> <!--ADD LINK-->
+        </div>
+
+        <div id="main">
+            <span style="font-size: 40px; cursor:pointer" onclick="openNav()">&#9776;</span>
+        </div>
+    </nav>
+
+    <script>
+        function openNav() {
+           document.getElementById("mySidenav").style.width = "250px";
+           document.getElementById("main").style.marginRight = "250px";
+        }
+
+        function closeNav() {
+           document.getElementById("mySidenav").style.width = "0";
+           document.getElementById("main").style.marginRight = "0";
+        }
+    </script>
+      <!-- multistep form -->
     <form id="msform">
         <!-- progressbar -->
         <ul id="progressbar">
@@ -9,10 +37,10 @@
         <!-- fieldsets -->
         <fieldset>
           <h2 class="fs-title">Step 1</h2>
-          <h3 class="fs-subtitle">Where is your provider?</h3>
+          <h3 class="fs-subtitle">Enter City</h3>
           <!--<p class="help-block">List your strengths here.</p>-->
-          <label for="inputCity">Enter Zip Code or City, State</label>
-          <input type="text" class="form-control" id="inputCity" placeholder="Enter Zip Code or City, State">
+          <!--<label for="inputCity">Enter City</label>-->
+          <input type="text" class="form-control" id="inputCity" placeholder="Enter City">
           <input type="button" name="next" class="next action-button" value="Next" />
         </fieldset>
     
@@ -20,34 +48,22 @@
           <h2 class="fs-title">Step 2</h2>
           <h3 class="fs-subtitle">What type of care do you need?</h3>
           <input type="button" name="mri" class="next action-button" id="mri" value="MRI" />
-          <input type="button" name="ct" class="next action-button" id="ct" value="CT (Cat) Scan" />
+          <input type="button" name="ct" class="next action-button" id="ct" value="CT" />
           <p class="or">OR</p>
           <label for="inputCpt">Already know your Procedure Code? Enter Below</label>
-          <input type="text" class="form-control" id="inputCpt" placeholder="Enter a Procedure Code">
+          <input type="text" class="form-control" id="inputCpt" placeholder="Enter a valid CPT code">
           <input type="button" name="previous" class="previous action-button" value="Previous" />
           <input type="button" name="next" class="next action-button" value="Next" />
         </fieldset>
-    
         <fieldset>
           <h2 class="fs-title">Step 3</h2>
-          <h3 class="fs-subtitle">Select <b>one</b> code</h3>
-          <div class="form-check">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-              <label class="form-check-label" for="exampleRadios1">CPT CODE & DESCRIPTION</label>
-          </div>
-          <div class="form-check">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-              <label class="form-check-label" for="exampleRadios1">CPT CODE & DESCRIPTION</label>
-          </div>
-          <div class="form-check">
-              <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-              <label class="form-check-label" for="exampleRadios1">CPT CODE & DESCRIPTION</label>
-          </div>
+          <h3 id="scanOptions" class="fs-subtitle">Select <b>one</b> code</h3>
           <input type="button" name="previous" class="previous action-button" value="Previous" />
-          <input type="button" name="next" id="requestCmsData"class="next action-button" value="Get your cost" />
+          <input type="button" name="next" id="requestCmsData"class="next action-button" value="Search" />
         </fieldset>
       </form>
-    <link rel="stylesheet" href="/css/styles.css">
+      <link rel="stylesheet" href="/css/styles.css">
+
       <!-- files that were in the head -->
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.js"></script>
@@ -59,3 +75,4 @@
     <!-- custom script -->
     <script src="/js/form.js"></script>
       
+ 

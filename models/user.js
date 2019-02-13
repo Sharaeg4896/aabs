@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize');
 var bcrypt = require('bcrypt');
 
-const sequelize = new Sequelize('cpt_DB', 'root', '', {
+const sequelize = new Sequelize('cpt_DB', 'root', 'CodeRae2019!', {
     host: 'localhost',
     port: 3306,
     dialect: 'mysql',
@@ -31,7 +31,8 @@ var User = sequelize.define('users', {
     password: {
         type: Sequelize.STRING,
         allowNull: false
-    }
+    },
+
 });
 
 // encrypts password
